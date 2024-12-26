@@ -14,6 +14,9 @@ Usage
   git-iter.sh (ls|list) REPO_REGEX_OPT ...
     Grep repository names.
 
+  git-iter.sh read COMMAND ...
+    Run command on repositories from stdin.
+
 Environment variables
   GIT_ITER_MAX_PROCS
     Maximum number of processes used for execution.

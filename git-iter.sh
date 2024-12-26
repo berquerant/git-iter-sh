@@ -15,6 +15,9 @@ Usage
   ${name} (ls|list) REPO_REGEX_OPT ...
     Grep repository names.
 
+  ${name} read COMMAND ...
+    Run command on repositories from stdin.
+
 Environment variables
   GIT_ITER_MAX_PROCS
     Maximum number of processes used for execution.
@@ -148,6 +151,7 @@ main() {
         "grep") git_iter_grep "$@" ;;
         "__git_iter_do") __git_iter_do "$@" ;;
         "ls" | "list") __select_repos "$@" ;;
+        "read") __git_iter_do_each "$@" ;;
         *)
             usage
             return 1
