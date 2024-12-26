@@ -1,7 +1,7 @@
 #!/bin/bash
 
 usage() {
-    name="${0##*/}"
+    local -r name="${0##*/}"
     cat - <<EOS >&2
 ${name} -- run command on multiple repositories
 
@@ -73,11 +73,11 @@ __select_repos() {
 # $1: directory
 # $2-: command and options
 __git_iter_do() {
-    local dir="$1"
+    local -r dir="$1"
     shift
-    pushd "$dir" > /dev/null
+    pushd "$dir" > /dev/null || return 1
     "$@"
-    popd > /dev/null
+    popd > /dev/null || return 1
 }
 
 __git_iter_do_each() {
@@ -90,8 +90,8 @@ __git_iter_do_each() {
 # $2: function2
 # $3-: arguments, before -- are arguments of function1, rest are arguments of function2
 __git_iter_call() {
-    local function1="$1"
-    local function2="$2"
+    local -r function1="$1"
+    local -r function2="$2"
     shift 2
     local function1_args=()
     for arg in "$@" ; do
@@ -115,8 +115,8 @@ __git_iter_grep() {
     if [[ -n "$GIT_ITER_GREP_ABS_PATH" ]] ; then
         repo_path="$(pwd)"
     else
-        local root="$(__repos_root)/"
-        local sed_expr="s|${root}||"
+        local -r root="$(__repos_root)/"
+        local -r sed_expr="s|${root}||"
         # relative path from repos root
         repo_path="$(pwd | sed "$sed_expr")"
     fi
@@ -136,7 +136,7 @@ git_iter_grep() {
 }
 
 main() {
-    local cmd="$1"
+    local -r cmd="$1"
     shift
     case "$cmd" in
         "do") git_iter_do "$@" ;;
