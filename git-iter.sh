@@ -125,9 +125,11 @@ __git_iter_grep() {
 
 git_iter_grep() {
     local args=()
+    local replaced=0
     for arg in "$@" ; do
         args+=("$arg")
-        if [[ "$arg" == "--" ]] ; then
+        if [[ "$replaced" == 0 && "$arg" == "--" ]] ; then
+            replaced=1
             args+=("__git_iter_grep")
             continue
         fi
