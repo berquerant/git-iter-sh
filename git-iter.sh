@@ -12,6 +12,9 @@ Usage
   ${name} grep REPO_REGEX_OPT ... -- GIT_GREP_REGEX_OPT ...
     Grep multiple repositories.
 
+  ${name} (ls|list) REPO_REGEX_OPT ...
+    Grep repository names.
+
 Environment variables
   GIT_ITER_MAX_PROCS
     Maximum number of processes used for execution.
@@ -144,6 +147,7 @@ main() {
         "do") git_iter_do "$@" ;;
         "grep") git_iter_grep "$@" ;;
         "__git_iter_do") __git_iter_do "$@" ;;
+        "ls" | "list") __select_repos "$@" ;;
         *)
             usage
             return 1
